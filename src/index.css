@@ -1,20 +1,20 @@
 @font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("./assets/fonts/PlusJakartaSans-Regular.ttf") format("truetype");
+  font-family: 'Plus Jakarta Sans';
+  src: url('./assets/fonts/PlusJakartaSans-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("./assets/fonts/PlusJakartaSans-Medium.ttf") format("truetype");
+  font-family: 'Plus Jakarta Sans';
+  src: url('./assets/fonts/PlusJakartaSans-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("./assets/fonts/PlusJakartaSans-Bold.ttf") format("truetype");
+  font-family: 'Plus Jakarta Sans';
+  src: url('./assets/fonts/PlusJakartaSans-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
 }
@@ -34,7 +34,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 99 95 199;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;

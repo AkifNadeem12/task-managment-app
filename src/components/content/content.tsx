@@ -3,7 +3,7 @@ import Header from '../header/header'
 
 const Content = () => {
   return (
-    <div className="p-4 sm:ml-64">
+    <div className="sm:ml-64">
       <Header />
       <Board />
     </div>
