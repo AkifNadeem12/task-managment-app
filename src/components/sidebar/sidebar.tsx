@@ -2,11 +2,20 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import DarkLogo from '@/assets/images/logo-dark.svg'
 import LightLogo from '@/assets/images/logo-light.svg'
 import BoardIcon from '@/assets/images/icon-board.svg'
+import ActiveBoardIcon from '@/assets/images/icon-active-board.svg'
 import EyeOff from '@/assets/images/icon-hide-sidebar.svg'
 import ThemeToggle from './theme-toggle'
+import { Plus } from 'lucide-react'
 
-const Sidebar = () => {
+interface Props {
+  data: JSONSchema
+  setSelectedBoard: (board: Board) => void
+  selectedBoard: Board | undefined
+}
+
+const Sidebar = ({ data, selectedBoard, setSelectedBoard }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
+
   const sidebarRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -21,6 +30,7 @@ const Sidebar = () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+
   return (
     <Fragment>
       <button
@@ -46,21 +56,39 @@ const Sidebar = () => {
         ref={sidebarRef}
         className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } sm:translate-x-0 border border-r-lines-dark`}
+        } sm:translate-x-0 border border-r-lines-light dark:border-r-lines-dark`}
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 relative">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-dark-grey relative">
           <div className="flex items-center ps-2.5 mb-8">
             <img src={DarkLogo} className="h-6 me-3 sm:h-6 block dark:hidden" alt="Logo Logo" />
             <img src={LightLogo} className="h-6 me-3 sm:h-6 hidden dark:block" alt="Logo Logo" />
           </div>
           <div className="flex items-center ps-2.5 mb-1">
-            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">All Boards (2)</span>
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
+              All Boards ({data && data.boards && data.boards.length})
+            </span>
           </div>
           <ul className="space-y-2 font-medium max-h-72 overflow-y-auto">
+            {data &&
+              data.boards &&
+              data.boards.map((board: Board) => (
+                <li key={board.name}>
+                  <div
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
+                    onClick={() => setSelectedBoard(board)}
+                  >
+                    <img src={BoardIcon} />
+                    <span className="ms-3">{board.name}</span>
+                  </div>
+                </li>
+              ))}
             <li>
-              <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer">
-                <img src={BoardIcon} />
-                <span className="ms-3">Board</span>
+              <div className="flex items-center p-2 rounded-lg cursor-pointer">
+                <img src={ActiveBoardIcon} />
+                <span className="ms-3 flex items-center text-main-purple">
+                  <Plus className=" h-3 w-3 mr-1 text-main-purple" />
+                  Create New Board
+                </span>
               </div>
             </li>
           </ul>
