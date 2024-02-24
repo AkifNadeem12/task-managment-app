@@ -6,15 +6,18 @@ import ActiveBoardIcon from '@/assets/images/icon-active-board.svg'
 import EyeOff from '@/assets/images/icon-hide-sidebar.svg'
 import ThemeToggle from './theme-toggle'
 import { Plus } from 'lucide-react'
+import CreateBoard from '../Dialog/createBoard'
 
 interface Props {
   data: JSONSchema
+  setData: (data: JSONSchema) => void
   setSelectedBoard: (board: Board) => void
   selectedBoard: Board | undefined
 }
 
-const Sidebar = ({ data, setSelectedBoard }: Props) => {
+const Sidebar = ({ data, setData, setSelectedBoard }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [openDialog, setOpenDialog] = useState<boolean>(false)
 
   const sidebarRef = useRef<HTMLDivElement | null>(null)
 
@@ -64,7 +67,7 @@ const Sidebar = ({ data, setSelectedBoard }: Props) => {
             <img src={LightLogo} className="h-6 me-3 sm:h-6 hidden dark:block" alt="Logo Logo" />
           </div>
           <div className="flex items-center ps-2.5 mb-1">
-            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase font-jakarta">
               All Boards ({data && data.boards && data.boards.length})
             </span>
           </div>
@@ -74,7 +77,7 @@ const Sidebar = ({ data, setSelectedBoard }: Props) => {
               data.boards.map((board: Board) => (
                 <li key={board.name}>
                   <div
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer font-jakarta"
                     onClick={() => setSelectedBoard(board)}
                   >
                     <img src={BoardIcon} />
@@ -83,7 +86,7 @@ const Sidebar = ({ data, setSelectedBoard }: Props) => {
                 </li>
               ))}
             <li>
-              <div className="flex items-center p-2 rounded-lg cursor-pointer">
+              <div className="flex items-center p-2 rounded-lg cursor-pointer font-jakarta" onClick={() => setOpenDialog(true)}>
                 <img src={ActiveBoardIcon} />
                 <span className="ms-3 flex items-center text-main-purple">
                   <Plus className=" h-3 w-3 mr-1 text-main-purple" />
@@ -94,7 +97,7 @@ const Sidebar = ({ data, setSelectedBoard }: Props) => {
           </ul>
           <ThemeToggle />
           <span
-            className="text-sm font-medium text-gray-500 dark:text-gray-400 absolute left-0 right-0 bottom-10 flex items-center justify-start gap-3 w-5/6 mx-auto cursor-pointer"
+            className="text-sm font-medium text-gray-500 dark:text-gray-400 absolute left-0 right-0 bottom-10 flex items-center justify-start gap-3 w-5/6 mx-auto cursor-pointer font-jakarta"
             onClick={() => setIsOpen(!isOpen)}
           >
             <img src={EyeOff} />
@@ -102,6 +105,7 @@ const Sidebar = ({ data, setSelectedBoard }: Props) => {
           </span>
         </div>
       </aside>
+      {openDialog && <CreateBoard open={openDialog} onChangeVisibility={() => setOpenDialog(false)} data={data} setData={setData} />}
     </Fragment>
   )
 }

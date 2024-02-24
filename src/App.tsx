@@ -4,13 +4,13 @@ import Sidebar from './components/sidebar/sidebar'
 import JsonData from '@/utils/data.json'
 
 const App = () => {
-  const [data] = useState<JSONSchema>(JsonData)
+  const [data, setData] = useState<JSONSchema>(JsonData)
   const [selectedBoard, setSelectedBoard] = useState<Board>(JsonData.boards[0])
 
   return (
     <div>
-      <Sidebar data={data} setSelectedBoard={setSelectedBoard} selectedBoard={selectedBoard} />
-      <Content selectedBoard={selectedBoard} />
+      <Sidebar data={data} setData={setData} setSelectedBoard={setSelectedBoard} selectedBoard={selectedBoard} />
+      <Content data={data} setData={setData} board={selectedBoard} />
     </div>
   )
 }
