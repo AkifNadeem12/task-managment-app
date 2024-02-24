@@ -13,7 +13,7 @@ interface Props {
   selectedBoard: Board | undefined
 }
 
-const Sidebar = ({ data, selectedBoard, setSelectedBoard }: Props) => {
+const Sidebar = ({ data, setSelectedBoard }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const sidebarRef = useRef<HTMLDivElement | null>(null)

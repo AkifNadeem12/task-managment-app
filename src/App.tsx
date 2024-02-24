@@ -4,7 +4,7 @@ import Sidebar from './components/sidebar/sidebar'
 import JsonData from '@/utils/data.json'
 
 const App = () => {
-  const [data, setData] = useState<JSONSchema>(JsonData)
+  const [data] = useState<JSONSchema>(JsonData)
   const [selectedBoard, setSelectedBoard] = useState<Board>(JsonData.boards[0])
 
   return (
