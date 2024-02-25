@@ -1,17 +1,25 @@
+import { DataContext } from '@/context/DataContext'
 import Board from '../board/board'
 import Header from '../header/header'
+import { useContext } from 'react'
 
 interface ContentProps {
   board: Board | undefined
-  data: JSONSchema
-  setData: (data: JSONSchema) => void
 }
 
-const Content = ({ board, data, setData }: ContentProps) => {
+const Content = ({ board }: ContentProps) => {
+  const context = useContext(DataContext)
+
+  if (!context) {
+    throw new Error('Content must be used within a DataProvider')
+  }
+
+  const { data, setData } = context
+
   return (
     <div className="sm:ml-64">
       <Header board={board} data={data} setData={setData} />
-      <Board board={board} />
+      <Board board={board} data={data} setData={setData} />
     </div>
   )
 }

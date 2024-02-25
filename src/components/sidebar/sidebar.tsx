@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import DarkLogo from '@/assets/images/logo-dark.svg'
 import LightLogo from '@/assets/images/logo-light.svg'
 import BoardIcon from '@/assets/images/icon-board.svg'
@@ -7,15 +7,21 @@ import EyeOff from '@/assets/images/icon-hide-sidebar.svg'
 import ThemeToggle from './theme-toggle'
 import { Plus } from 'lucide-react'
 import CreateBoard from '../Dialog/createBoard'
+import { DataContext } from '@/context/DataContext'
 
 interface Props {
-  data: JSONSchema
-  setData: (data: JSONSchema) => void
   setSelectedBoard: (board: Board) => void
   selectedBoard: Board | undefined
 }
 
-const Sidebar = ({ data, setData, setSelectedBoard }: Props) => {
+const Sidebar = ({ setSelectedBoard }: Props) => {
+  const context = useContext(DataContext)
+
+  if (!context) {
+    throw new Error('Sidebar must be used within a DataProvider')
+  }
+
+  const { data, setData } = context
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [openDialog, setOpenDialog] = useState<boolean>(false)
 
