@@ -1,18 +1,17 @@
-import { useState } from 'react'
-import Content from './components/content/content'
-import Sidebar from './components/sidebar/sidebar'
-import JsonData from '@/utils/data.json'
-import { DataContext } from './context/DataContext'
+import { Route, Routes } from 'react-router-dom'
+import SignIn from './pages/sign-in/signIn'
+import SignUp from './pages/sign-up/signUp'
+import PrivateRoute from './utils/privateRoute'
 
 const App = () => {
-  const [data, setData] = useState<JSONSchema>(JsonData)
-  const [selectedBoard, setSelectedBoard] = useState<Board>(JsonData.boards[0])
-
   return (
-    <DataContext.Provider value={{ data, setData, selectedBoard }}>
-      <Sidebar setSelectedBoard={setSelectedBoard} selectedBoard={selectedBoard} />
-      <Content board={selectedBoard} />
-    </DataContext.Provider>
+    <Routes>
+      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/sign-up" element={<SignUp />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="/" element={<>Auth</>} />
+      </Route>
+    </Routes>
   )
 }
 
